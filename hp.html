@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加地研究室 - 九州大学</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff9d;
+            --secondary-color: #00b8ff;
+            --accent-color: #ff00ff;
+            --text-color: #fff;
+            --dark-bg: #0a0a0a;
+            --neon-glow: 0 0 10px rgba(0, 255, 157, 0.5),
+                         0 0 20px rgba(0, 255, 157, 0.3),
+                         0 0 30px rgba(0, 255, 157, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, var(--dark-bg) 21px, transparent 1%) center,
+                linear-gradient(var(--dark-bg) 21px, transparent 1%) center,
+                var(--primary-color);
+            background-size: 22px 22px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 184, 255, 0.3)),
+                        url('https://www.kyushu-u.ac.jp/ja/wp-content/uploads/2021/03/20210325_01.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0%,
+                transparent 50%,
+                rgba(0, 255, 157, 0.1) 50%,
+                rgba(0, 255, 157, 0.1) 100%
+            );
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            text-shadow: var(--neon-glow);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1::before {
+            content: attr(data-text);
+            position: absolute;
+            left: -2px;
+            text-shadow: 2px 0 var(--accent-color);
+            top: 0;
+            color: var(--primary-color);
+            background: var(--dark-bg);
+            overflow: hidden;
+            animation: glitch 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch {
+            0% {
+                clip-path: inset(80% 0 0 0);
+                transform: translateX(-2px);
+            }
+            20% {
+                clip-path: inset(20% 0 60% 0);
+                transform: translateX(2px);
+            }
+            40% {
+                clip-path: inset(40% 0 40% 0);
+                transform: translateX(-2px);
+            }
+            60% {
+                clip-path: inset(80% 0 5% 0);
+                transform: translateX(2px);
+            }
+            80% {
+                clip-path: inset(10% 0 85% 0);
+                transform: translateX(-2px);
+            }
+            100% {
+                clip-path: inset(40% 0 50% 0);
+                transform: translateX(2px);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+            padding: 1rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav a:hover::before {
+            transform: scaleX(1);
+        }
+
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            color: var(--primary-color);
+            text-shadow: var(--neon-glow);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            box-shadow: var(--neon-glow);
+            margin: 1rem auto;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .research-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--neon-glow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.4);
+        }
+
+        .research-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .research-card-content {
+            padding: 1.5rem;
+        }
+
+        .research-card h3 {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+
+        .contact-info {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--neon-glow);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.4);
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(10, 10, 10, 0.9);
+            border-top: 1px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .member-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--neon-glow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.4);
+        }
+
+        .member-image {
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid var(--primary-color);
+            clip-path: polygon(
+                0% 0%, 5% 0%, 5% 5%, 95% 5%, 95% 0%, 100% 0%,
+                100% 100%, 95% 100%, 95% 95%, 5% 95%, 5% 100%, 0% 100%
+            );
+            animation: frameGlow 2s infinite alternate;
+        }
+
+        @keyframes frameGlow {
+            0% {
+                box-shadow: 0 0 10px var(--primary-color);
+            }
+            100% {
+                box-shadow: 0 0 20px var(--primary-color),
+                           0 0 30px var(--secondary-color);
+            }
+        }
+
+        .member-info {
+            padding: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .member-info h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+
+        .member-title {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-details, .member-location, .member-email {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            opacity: 0.8;
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(0, 255, 157, 0.1) 50%, 
+                transparent 100%);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#about">研究室概要</a></li>
+            <li><a href="#research">研究内容</a></li>
+            <li><a href="#members">メンバー</a></li>
+            <li><a href="#publications">業績</a></li>
+            <li><a href="#contact">連絡先</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>加地研究室</h1>
+            <p>九州大学大学院 工学研究院 応用化学部門</p>
+            <div class="scroll-down">↓</div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">研究室概要</h2>
+            <center>加地研究室は、2018年1月に加地教授が着任し、同年4月から学生が配属されてスタートしました。<br>
+
+               <br>
+                配属される方は、研究に自主的かつ意欲的に取り組める方、我こそが<br>
+                分析化学の新しい研究分野を切り拓いていくというパイオニア精神にあふれた方を歓迎します。<br>
+                <br>
+                また、国内外を問わず他研究機関との共同研究や留学生の受け入れを積極的に推進していくため、<br>
+                考え方の多様性を受容でき、協調性のある情熱にあふれた熱い方を歓迎します。<br>
+                <br>
+                各々が研究室を支えているという当事者意識を大事にしながら有意義な学生生活を送れるよう、スタッフとともに頑張りましょう。 </center>
+        </div>
+    </section>
+
+    <section id="research">
+        <div class="container">
+            <h2 class="section-title">研究内容</h2>
+            <div class="research-grid">
+                <div class="research-card">
+                    <img src="https://www.kyushu-u.ac.jp/ja/wp-content/uploads/2021/03/20210325_02.jpg" alt="研究画像1">
+                    <div class="research-card-content">
+                        <h3>機能性材料の開発</h3>
+                        <p>新規機能性材料の設計と合成に関する研究を行っています。</p>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <img src="https://www.kyushu-u.ac.jp/ja/wp-content/uploads/2021/03/20210325_03.jpg" alt="研究画像2">
+                    <div class="research-card-content">
+                        <h3>構造解析</h3>
+                        <p>最新の分析装置を用いた材料の構造解析を実施しています。</p>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <img src="https://www.kyushu-u.ac.jp/ja/wp-content/uploads/2021/03/20210325_04.jpg" alt="研究画像3">
+                    <div class="research-card-content">
+                        <h3>応用研究</h3>
+                        <p>実用化に向けた応用研究を展開しています。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="members">
+        <div class="container">
+            <h2 class="section-title">教員</h2>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://www.cstf.kyushu-u.ac.jp/files/bgeditor/img/29__5Yqg5Zyw6aGU5YaZ55yf.jpg" alt="加地 範匡教授" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div class="cyber-frame"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>加地 範匡</h3>
+                        <p class="member-title">教授</p>
+                        <p class="member-details">Ph.D. </p>
+                        <a class="XqQF9c" href="https://drive.google.com/file/d/1NTEH_OR_H9FuuyrhB9zUB8WxEec6oA_U/view?usp=sharing" target="_blank" style="color: inherit; text-decoration: none;"><span class="C9DxTc aw5Odc " style="text-decoration: underline;">CV</span></a>   
+                        <p class="member-location">West3 Room 403</p>
+                        <p class="member-email">kaji [at] cstf.kyushu-u.ac.jp</p>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://www.cstf.kyushu-u.ac.jp/files/bgeditor/img/23__6LKh5rSl5YaZ55yf.png" alt="財津 慎一准教授" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div class="cyber-frame"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>財津 慎一</h3>
+                        <p class="member-title">准教授</p>
+                        <p class="member-details">Ph.D.</p>
+                        <p class="member-location">West3 Room 402</p>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://www.cstf.kyushu-u.ac.jp/files/bgeditor/img/32__SU1HXzkzMTHjga7jgrPjg5Tjg7w-d-.jpg" alt="梁 逸偉助教" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div class="cyber-frame"></div>
+                    </div>
+                    <div class="member-info">
+                        <h3>梁 逸偉</h3>
+                        <p class="member-title">助教</p>
+                        <p class="member-details">Ph.D.</p>
+                        <p class="member-location">West3 Room</p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h2 class="section-title">メンバー</h2>
+            <div class="members-grid" style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem;">
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>山田 太郎</h3>
+                    <p class="member-title">博士課程1年</p>
+                    <p class="member-details">研究テーマ：新規機能性材料の開発</p>
+                </div>
+                
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>鈴木 花子</h3>
+                    <p class="member-title">修士課程2年</p>
+                    <p class="member-details">研究テーマ：構造解析手法の開発</p>
+                </div>
+                
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>佐藤 一郎</h3>
+                    <p class="member-title">修士課程1年</p>
+                    <p class="member-details">研究テーマ：応用研究の展開</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>田中 健太</h3>
+                    <p class="member-title">博士課程2年</p>
+                    <p class="member-details">研究テーマ：材料特性の評価</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>高橋 美咲</h3>
+                    <p class="member-title">修士課程2年</p>
+                    <p class="member-details">研究テーマ：新規合成手法の開発</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>伊藤 翔太</h3>
+                    <p class="member-title">修士課程1年</p>
+                    <p class="member-details">研究テーマ：材料設計の最適化</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>渡辺 優子</h3>
+                    <p class="member-title">博士課程3年</p>
+                    <p class="member-details">研究テーマ：機能性材料の応用</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>中村 拓也</h3>
+                    <p class="member-title">修士課程2年</p>
+                    <p class="member-details">研究テーマ：材料の耐久性評価</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>小林 愛</h3>
+                    <p class="member-title">修士課程1年</p>
+                    <p class="member-details">研究テーマ：新規分析手法の開発</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>加藤 大輔</h3>
+                    <p class="member-title">博士課程2年</p>
+                    <p class="member-details">研究テーマ：材料の構造解析</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>吉田 真由美</h3>
+                    <p class="member-title">修士課程2年</p>
+                    <p class="member-details">研究テーマ：材料の特性改善</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>松本 健一</h3>
+                    <p class="member-title">修士課程1年</p>
+                    <p class="member-details">研究テーマ：新規材料の開発</p>
+                </div>
+
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>井上 美咲</h3>
+                    <p class="member-title">博士課程1年</p>
+                    <p class="member-details">研究テーマ：材料の応用研究</p>
+                </div>
+                
+                <div class="member-info" style="flex: 1; min-width: 250px; max-width: 300px; background: rgba(10, 10, 10, 0.8); border: 1px solid var(--primary-color); border-radius: 10px; padding: 1.5rem; box-shadow: var(--neon-glow);">
+                    <h3>松本 健一</h3>
+                    <p class="member-title">修士課程1年</p>
+                    <p class="member-details">研究テーマ：新規材料の開発</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">連絡先</h2>
+            <div class="contact-info">
+                <p><strong>住所：</strong>〒819-0395 福岡市西区元岡744</p>
+                <p><strong>所属：</strong>九州大学大学院 工学研究院 応用化学部門</p>
+                <p><strong>場所：</strong>West 3号館4F 加地研究室</p>
+                <p><strong>電話：</strong>092-802-2886</p>
+            </div>
+            <div class="map-container" style="margin-top: 2rem; border: 1px solid var(--primary-color); border-radius: 10px; overflow: hidden; box-shadow: var(--neon-glow);">
+                <iframe 
+                    src="https://maps-api-ssl.google.com/maps?hl=ja&ll=33.595542,130.216946&output=embed&q=33.595632,130.216796+(%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E3%81%AA%E3%81%97%E3%81%AE%E5%A0%B4%E6%89%80)&z=17" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Kaji Research Group, Kyushu University. All rights reserved.</p>
+    </footer>
+</body>
+</html>
